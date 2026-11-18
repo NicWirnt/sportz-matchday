@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#101b18" />
+    <title>Sportz FM · Match centre</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="bar">
+        <a class="brand" href="./" aria-label="Sportz FM home"
+          ><i class="bars"><b></b><b></b><b></b><b></b></i>Sportz<span
+            >FM</span
+          ></a
+        ><a class="navlink" href="#centre">Match centre</a
+        ><span class="connection" id="connection" role="status"
+          >Connecting</span
+        >
+      </div>
+    </header>
+    <main id="centre">
+      <div class="mast">
+        <div>
+          <small><i class="dash"></i> BROADCAST DESK</small>
+          <h1>Match centre<span>.</span></h1>
+        </div>
+        <div class="controls">
+          <label class="sr" for="source">Broadcast source</label
+          ><select id="source">
+            <option value="server">Server feed</option>
+            <option value="preview">Sample replay</option>
+          </select>
+        </div>
+      </div>
+      <div class="layout">
+        <section aria-label="Selected broadcast">
+          <div class="hero">
+            <div class="ghost" aria-hidden="true">
+              <div class="pitch"><i></i><b></b><em></em></div>
+            </div>
+            <div class="topline">
+              <small id="sport">MATCH BROADCAST</small
+              ><span class="tag" id="phase"></span>
+            </div>
+            <div id="score"></div>
+            <div class="foot">
+              <span id="kickoff"></span
+              ><i class="signal" aria-hidden="true">▂▄▆█</i>
+            </div>
+          </div>
+          <section class="panel timeline">
+            <div class="sectiontitle">
+              <div>
+                <small>PLAY BY PLAY</small>
+                <h2>Commentary</h2>
+              </div>
+              <span id="count"></span>
+            </div>
+            <div id="timeline" aria-live="polite"></div>
+          </section>
+        </section>
+        <aside class="panel fixtures">
+          <div class="sectiontitle">
+            <div>
+              <small>THE LINEUP</small>
+              <h2>Match board</h2>
+            </div>
+            <i class="boardicon" aria-hidden="true">☷</i>
+          </div>
+          <div id="filters" aria-label="Filter match list"></div>
+          <div id="fixtures"></div>
+        </aside>
+      </div>
+      <footer>
+        <span>Sportz FM</span><span>Sports broadcast network</span>
+      </footer>
+    </main>
+  </body>
+</html>

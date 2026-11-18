@@ -1,0 +1,13 @@
+http://localhost:8080 {
+  bind 127.0.0.1
+  handle_path /api/* {
+    reverse_proxy {$API_UPSTREAM:127.0.0.1:8000}
+  }
+  handle /ws {
+    reverse_proxy {$API_UPSTREAM:127.0.0.1:8000}
+  }
+  handle {
+    root * ./public
+    file_server
+  }
+}

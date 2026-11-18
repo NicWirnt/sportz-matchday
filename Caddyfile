@@ -1,0 +1,13 @@
+:8080 {
+  encode gzip
+  handle_path /api/* {
+    reverse_proxy {$API_UPSTREAM}
+  }
+  handle /ws {
+    reverse_proxy {$API_UPSTREAM}
+  }
+  handle {
+    root * /srv
+    file_server
+  }
+}
