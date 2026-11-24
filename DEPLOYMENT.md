@@ -54,6 +54,7 @@ Generate a publisher secret in your SSH session with `openssl rand -hex 32`. Sto
 | DATABASE_URL | Exact internal URL from step 3 |
 | PUBLISH_TOKEN | Generated secret |
 | PORT | 8000 |
+| DEMO_ENABLED | true to let visitors start a fictional live broadcast |
 
 Arcjet is optional. Leave `ARCJET_KEY` unset for the initial LAN demo. The local database uses a direct connection, so `DATABASE_URL_UNPOOLED` can remain unset. Deploy and look for **Database migrations complete** followed by **Server running**. The image runs the committed migrations before listening. Use a database dedicated to Sportz because the historical migrations create and then drop an old demo table.
 
@@ -82,9 +83,13 @@ curl.exe http://sportz.home.arpa/api/health
 curl.exe http://sportz.home.arpa/api/matches
 ```
 
-Expect `{"status":"ready"}` and, for an empty database, `{"data":[]}`. Visit **http://sportz.home.arpa** without a port suffix. Confirm **Signal online**. [Coolify domain routing](https://coolify.io/docs/core/networking/domains)
+Expect `{"status":"ready"}` and, for an empty database, `{"data":[]}`. Visit **http://sportz.home.arpa** without a port suffix. Select **Server feed** and confirm **Signal online**. [Coolify domain routing](https://coolify.io/docs/core/networking/domains)
 
-## 6. Watch a real broadcast
+## 6. Watch a live demo
+
+Choose **Live demo → Start demo** on the deployed frontend. Open the same page in a second browser window. Both windows show a fictional basketball game, with the first score change after about six seconds and a final buzzer at 12 minutes. The simulation serves one shared game at a time. It restarts on demand after a 30-second cooldown and clears when the backend container restarts. Use `/?source=demo` as a direct link to the demo.
+
+To verify the regular match feed separately, publish through the backend:
 
 Open the match centre in two browser windows and select **Server feed** and **All**. In the **backend resource terminal** run:
 

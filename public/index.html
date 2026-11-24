@@ -3,79 +3,179 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#101b18" />
-    <title>Sportz FM · Match centre</title>
+    <meta name="theme-color" content="#0c0d10" />
+    <meta
+      name="description"
+      content="Sportz Arena is a scoreboard and play-by-play match centre for live sports broadcasts."
+    />
+    <title>Sportz Arena · Match centre</title>
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="app.js"></script>
   </head>
   <body>
-    <header>
-      <div class="bar">
-        <a class="brand" href="./" aria-label="Sportz FM home"
-          ><i class="bars"><b></b><b></b><b></b><b></b></i>Sportz<span
-            >FM</span
-          ></a
-        ><a class="navlink" href="#centre">Match centre</a
-        ><span class="connection" id="connection" role="status"
-          >Connecting</span
+    <a class="skip" href="#scoreboard">Skip to scoreboard</a>
+    <header class="topbar">
+      <div class="shell mast">
+        <a class="brand" href="./" aria-label="Sportz Arena home"
+          ><i aria-hidden="true"></i
+          ><span>SPORTZ<span class="brand-accent"> ARENA</span></span></a
+        >
+        <nav aria-label="Match centre sections">
+          <a href="#scoreboard">Scoreboard</a
+          ><a href="#commentary">Play-by-play</a>
+        </nav>
+        <span class="connection" id="connection" role="status"
+          >Sample replay</span
         >
       </div>
     </header>
-    <main id="centre">
-      <div class="mast">
-        <div>
-          <small><i class="dash"></i> BROADCAST DESK</small>
-          <h1>Match centre<span>.</span></h1>
-        </div>
-        <div class="controls">
-          <label class="sr" for="source">Broadcast source</label
-          ><select id="source">
-            <option value="server">Server feed</option>
-            <option value="preview">Sample replay</option>
-          </select>
+    <main class="shell">
+      <div class="lead">
+        <h1>Match centre<span>.</span></h1>
+        <div class="source-control" role="group" aria-label="Broadcast source">
+          <button type="button" data-source="demo" aria-pressed="false">
+            Live demo
+          </button>
+          <button type="button" data-source="server" aria-pressed="false">
+            Server feed
+          </button>
+          <button type="button" data-source="replay" aria-pressed="true">
+            Sample replay
+          </button>
         </div>
       </div>
-      <div class="layout">
-        <section aria-label="Selected broadcast">
-          <div class="hero">
-            <div class="ghost" aria-hidden="true">
-              <div class="pitch"><i></i><b></b><em></em></div>
-            </div>
-            <div class="topline">
-              <small id="sport">MATCH BROADCAST</small
-              ><span class="tag" id="phase"></span>
-            </div>
-            <div id="score"></div>
-            <div class="foot">
-              <span id="kickoff"></span
-              ><i class="signal" aria-hidden="true">▂▄▆█</i>
-            </div>
+      <section
+        class="demo-banner"
+        id="demo-banner"
+        aria-label="Live demo controls"
+        hidden
+      >
+        <div>
+          <h2>Simulated broadcast</h2>
+          <p id="demo-detail">Checking demo availability…</p>
+          <p id="demo-error" role="status"></p>
+        </div>
+        <button
+          class="primary"
+          id="start-demo"
+          type="button"
+          aria-disabled="true"
+        >
+          Start demo
+        </button>
+      </section>
+      <div class="arena-layout">
+        <section
+          class="jumbotron"
+          id="scoreboard"
+          tabindex="-1"
+          aria-label="Match scoreboard"
+        >
+          <div class="strip">
+            <span id="sport">Scoreboard</span><span id="fixture-meta"></span>
           </div>
-          <section class="panel timeline">
-            <div class="sectiontitle">
-              <div>
-                <small>PLAY BY PLAY</small>
-                <h2>Commentary</h2>
+          <div class="field" id="field">
+            <div class="team home">
+              <div class="crest" aria-hidden="true">
+                <span id="home-code"></span>
               </div>
-              <span id="count"></span>
+              <h2 id="home-team"></h2>
+              <small>Home</small>
             </div>
-            <div id="timeline" aria-live="polite"></div>
-          </section>
-        </section>
-        <aside class="panel fixtures">
-          <div class="sectiontitle">
-            <div>
-              <small>THE LINEUP</small>
-              <h2>Match board</h2>
+            <div class="result">
+              <span id="phase"></span>
+              <p class="score" id="score" aria-live="polite">
+                <strong id="home-score"></strong><i aria-hidden="true">:</i
+                ><span class="sr">to</span><strong id="away-score"></strong>
+              </p>
+              <span class="clock" id="clock"></span>
             </div>
-            <i class="boardicon" aria-hidden="true">☷</i>
+            <div class="team away">
+              <div class="crest" aria-hidden="true">
+                <span id="away-code"></span>
+              </div>
+              <h2 id="away-team"></h2>
+              <small>Away</small>
+            </div>
           </div>
-          <div id="filters" aria-label="Filter match list"></div>
+          <div class="board-empty" id="board-empty" hidden>
+            <h2 id="empty-title"></h2>
+            <p id="empty-detail"></p>
+            <button class="primary" id="try-sample" type="button">
+              Open sample replay <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <div class="replay-desk" id="replay-desk">
+            <div class="replay-header">
+              <span class="label">Replay timeline</span
+              ><span id="progress-text"></span>
+            </div>
+            <div
+              class="track"
+              id="track"
+              role="group"
+              aria-label="Jump to a replay moment"
+            ></div>
+            <div class="cue">
+              <div>
+                <h3 id="event"></h3>
+                <p id="detail"></p>
+              </div>
+              <div class="step">
+                <button type="button" id="prev" aria-label="Previous play">
+                  ←</button
+                ><button type="button" id="next" aria-label="Next play">
+                  →
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="live-desk" id="live-desk" hidden>
+            <span class="label">Latest from the match</span>
+            <p id="live-summary"></p>
+          </div>
+        </section>
+        <section class="matchboard" aria-labelledby="board-title">
+          <div class="panel-title">
+            <h2 id="board-title">Match board</h2>
+            <span id="fixture-count"></span>
+          </div>
+          <div
+            class="filters"
+            id="filters"
+            role="group"
+            aria-label="Filter matches"
+          >
+            <button type="button" data-filter="All" aria-pressed="true">
+              All
+            </button>
+            <button type="button" data-filter="Live" aria-pressed="false">
+              Live
+            </button>
+            <button type="button" data-filter="Scheduled" aria-pressed="false">
+              Upcoming
+            </button>
+            <button type="button" data-filter="Finished" aria-pressed="false">
+              Final
+            </button>
+          </div>
           <div id="fixtures"></div>
-        </aside>
+        </section>
+        <section
+          class="commentary"
+          id="commentary"
+          aria-labelledby="commentary-title"
+        >
+          <div class="panel-title">
+            <h2 id="commentary-title">Play-by-play</h2>
+            <span id="count"></span>
+          </div>
+          <div id="timeline"></div>
+          <p class="sr" id="announce" role="status"></p>
+        </section>
       </div>
       <footer>
-        <span>Sportz FM</span><span>Sports broadcast network</span>
+        <a href="./">Sportz Arena</a><span>Stadium photograph · Unsplash</span>
       </footer>
     </main>
   </body>
